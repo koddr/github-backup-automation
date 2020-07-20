@@ -1,0 +1,18 @@
+# Ansible playbook for a backup automation of your GitHub accounts (repositories, gists, organizations).
+# For more information, please visit https://github.com/koddr/github-backup-automation
+# Author: Vic Shóstak <truewebartisans@gmail.com> (https://1wa.co)
+# License: MIT
+
+---
+- hosts: "{{ host|default('localhost') }}"
+
+  tasks:
+    - name: Runs Docker container for backup
+      docker_container:
+        name: github-backup-automation
+        image: koddr/github-backup-automation:latest
+        recreate: yes
+        env_file: ${PWD}/.env
+        volumes:
+          - ./var/github-backup:/srv/var/github-backup
+        state: started
