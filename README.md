@@ -38,8 +38,32 @@ pip install ansible
 [my_backup_server]
 11.22.33.44 # or domain name
 ```
+4. Create Ansible playbook:
 
-4. Run configured Ansible playbook:
+```yaml
+---
+- hosts: "{{ host|default('localhost') }}"
+
+  tasks:
+    - name: Runs Docker container for backup
+      docker_container:
+        name: github-backup-automation
+        image: koddr/github-backup-automation:latest
+        recreate: yes
+        env_file: ${PWD}/.env
+        # or inline env variables, like:
+        # env:
+        #   - USERS: user123,org123
+        #   - GITHUB_TOKEN: 0000000000000000000000000
+        #   - MAX_BACKUPS: 10
+        #   - DELAY_TIME: 1d
+        #   - TIME_ZONE: America/Chicago
+        volumes:
+          - ./var/github-backup:/srv/var/github-backup
+        state: started
+```
+
+5. Run configured Ansible playbook:
 
 ```bash
 ansible-playbook playbook.yml -u <USER> --extra-vars "host=my_backup_server"
