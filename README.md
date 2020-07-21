@@ -1,4 +1,4 @@
-# A Docker image to backup automation for your GitHub accounts (repositories, gists, organizations)
+# A [Docker image](https://hub.docker.com/r/koddr/github-backup-automation) to backup automation for your GitHub accounts (repositories, gists, organizations)
 
 > ☝️ This is a more usable fork of [`umputun/github-backup-docker`](https://github.com/umputun/github-backup-docker) image with some extra features, like gzip compression of your backup files and ready to work with Ansible playbook.
 
